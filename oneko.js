@@ -1,5 +1,5 @@
 // oneko.js: https://github.com/adryd325/oneko.js
-// Modifikovana verzija sa funkcijom hvatanja mačke
+// Модификована верзија са функцијом хватања мачке и подршком за додирне екране
 
 (function oneko() {
     const isReducedMotion =
@@ -112,31 +112,65 @@
         document.body.appendChild(nekoEl);
 
         document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("touchmove", onTouchMove, { passive: false });
         nekoEl.addEventListener("mousedown", onMouseDown);
+        nekoEl.addEventListener("touchstart", onTouchStart, { passive: false });
         document.addEventListener("mouseup", onMouseUp);
+        document.addEventListener("touchend", onTouchEnd);
 
         window.requestAnimationFrame(onAnimationFrame);
     }
 
     function onMouseDown(event) {
+        event.preventDefault();
+        startDragging(event.clientX, event.clientY);
+    }
+
+    function onTouchStart(event) {
+        event.preventDefault();
+        const touch = event.touches[0];
+        startDragging(touch.clientX, touch.clientY);
+    }
+
+    function startDragging(clientX, clientY) {
         isDragging = true;
-        offsetX = event.clientX - nekoPosX;
-        offsetY = event.clientY - nekoPosY;
+        offsetX = clientX - nekoPosX;
+        offsetY = clientY - nekoPosY;
         nekoEl.style.cursor = "grabbing";
     }
 
     function onMouseUp() {
+        stopDragging();
+    }
+
+    function onTouchEnd() {
+        stopDragging();
+    }
+
+    function stopDragging() {
         isDragging = false;
         nekoEl.style.cursor = "grab";
     }
 
     function onMouseMove(event) {
+        event.preventDefault();
         mousePosX = event.clientX;
         mousePosY = event.clientY;
+        updatePosition(mousePosX, mousePosY);
+    }
 
+    function onTouchMove(event) {
+        event.preventDefault();
+        const touch = event.touches[0];
+        mousePosX = touch.clientX;
+        mousePosY = touch.clientY;
+        updatePosition(mousePosX, mousePosY);
+    }
+
+    function updatePosition(clientX, clientY) {
         if (isDragging) {
-            nekoPosX = mousePosX - offsetX;
-            nekoPosY = mousePosY - offsetY;
+            nekoPosX = clientX - offsetX;
+            nekoPosY = clientY - offsetY;
             updateNekoPosition();
         }
     }
@@ -272,6 +306,11 @@
 
     document.head.appendChild(style);
     nekoEl.addEventListener("click", explodeHearts);
+    nekoEl.addEventListener("touchend", function (e) {
+        if (!isDragging) {
+            explodeHearts();
+        }
+    });
 
     function frame() {
         frameCount += 1;
