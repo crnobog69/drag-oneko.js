@@ -10,10 +10,6 @@
 
 You can click and hold to drag the cat(oneko) anywhere you want. 🐱
 
-<br>
-<br>
-<br>
-
 ---
 
 ### ***Демо | Demo*** : =+++> [[|||||||]](https://crnobog69.github.io/drag-oneko.js/demo.html) 
