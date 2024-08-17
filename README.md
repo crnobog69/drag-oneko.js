@@ -1,4 +1,17 @@
-# oneko.js
+# 🐾 drag-oneko.js
+
+### 🐾 | Превуците онеко | Drag the oneko
+
+Можете кликнути и држати да би превукли мачку(онеко) где год желите. 🐱
+/
+You can click and hold to drag the cat(oneko) anywhere you want. 🐱
+
+---
+
+🖊 | Оригинални аутор | Original author: [adryd325](https://github.com/adryd325/oneko.js)
+🔀 | Форковано од | Fork of: [tylxr59](https://github.com/tylxr59/oneko.js/)
+
+### 📜 | Оригинални README.md Original README.md
 
 A hacky script I wrote to put a cat on my site.
 
